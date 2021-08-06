@@ -66,7 +66,7 @@ class GameController:
             'connections': []
         }
     
-    #salva o melhor recorde ja obtido, mesmo que esse seja de alguma outra vez que rodou o programa
+    #ao finalizar o jogo verifica se algum dinossauro bateu o recorde
     def saveGeneralRecord(self):
         if(self.general_record<=self.score):
             print(self.general_record)
@@ -165,6 +165,7 @@ class GameController:
         self.dinos.append(Dino(self.master, self.canvas, DinoBrain(), self.game_params, self.decreaseDinos, mode=self.mode, game_modes=self.game_modes, color="black"))
         self.dinos.append(Dino(self.master, self.canvas, DinoBrain(), self.game_params, self.decreaseDinos, mode="train", game_modes=self.game_modes, color="red"))
         self.dinos[-1].brain.load()
+        print(self.dinos[1].brain.W)
         self.dinosOnScreen = 2
         self.obstacleGenerator = ObstacleGenerator(self.master, self.canvas, self.updateGameParams, self.increaseScore)
         self.obstacleGenerator.updateObstaclesSpeed(self.game_params['speed'])
@@ -245,7 +246,10 @@ class GameController:
         self.obstacleGenerator.updateObstaclesSpeed(self.game_params['speed'])
         self.obstacleGenerator.reset()
         #final de uma geração
-        self.populateNextGeneration(0.35)
+        if(self.mode == "game"):
+            dino.reset()
+        else:   
+            self.populateNextGeneration(0.35)
          
         for  i, dino in enumerate(self.dinos):
             dino.game_params = self.game_params
