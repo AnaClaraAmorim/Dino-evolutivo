@@ -6,7 +6,7 @@ Esse projeto é um algoritmo evolutivo para o famoso jogo do dinossauro do googl
 
 Video explicando o código e com desmonstração do funcionamento:
 
-https://youtu.be/Fd1f-lYZuQ4
+https://youtu.be/z6_aRjZORBc
 
 # Código
 
