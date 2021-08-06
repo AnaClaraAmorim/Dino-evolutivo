@@ -165,7 +165,7 @@ class GameController:
         self.dinos.append(Dino(self.master, self.canvas, DinoBrain(), self.game_params, self.decreaseDinos, mode=self.mode, game_modes=self.game_modes, color="black"))
         self.dinos.append(Dino(self.master, self.canvas, DinoBrain(), self.game_params, self.decreaseDinos, mode="train", game_modes=self.game_modes, color="red"))
         self.dinos[-1].brain.load()
-        print(self.dinos[1].brain.W)
+        print(self.dinos[-1].brain.W)
         self.dinosOnScreen = 2
         self.obstacleGenerator = ObstacleGenerator(self.master, self.canvas, self.updateGameParams, self.increaseScore)
         self.obstacleGenerator.updateObstaclesSpeed(self.game_params['speed'])
@@ -247,7 +247,8 @@ class GameController:
         self.obstacleGenerator.reset()
         #final de uma geração
         if(self.mode == "game"):
-            dino.reset()
+            for  i, dino in enumerate(self.dinos):
+                dino.reset()
         else:   
             self.populateNextGeneration(0.35)
          
