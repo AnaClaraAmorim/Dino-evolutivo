@@ -14,9 +14,14 @@ from classes.DinoBrain import DinoBrain
 from utils.draw import draw_nn
 import sys
 import numpy as np
+
+
 #classe responsavel por controlar todo o jogo
 class GameController:
+
     def __init__(self, mode, dinos_per_gen = 10):
+        self.best_score = []
+        self.average_score = []
         self.mode = mode#modo do jogo
         self.master = Tk()
         self.master.title("DINO GAME by Ana Clara")
@@ -239,10 +244,12 @@ class GameController:
             if(dino.best):
                 self.parents.append(dino.brain.getBrain())
             if(dino.best == 1):
+                self.best_score.append(self.score)
                 print("melhor resultado da geração: ", self.score)
                 if(self.mode == "train"):
                     dino.brain.save()
-        
+        if(self.mode == "simulation"):
+            np.save('data/general/best_scores.npy', np.array([self.best_score]))
         self.obstacleGenerator.updateObstaclesSpeed(self.game_params['speed'])
         self.obstacleGenerator.reset()
         #final de uma geração
