@@ -52,6 +52,10 @@ sudo python3 main.py game
 
 ## Gráfico de Melhor Score x Média dos Scores da população
 
+```bash
+python3 graph.py 
+```
+
 Neste gráfico observamos que a partir da 10ª geração ele tem um score expressivo que representa um usuário jogando, por 5 minutos, por exemplo, verificado por teste enquanto eu jogava. A partir já da 15ª geração começa a atingir scores na faixa de 125 que é próximo a velocidade máxima que o dino alcança, o que significa que ele já aprendeu como passar por todas as fases do jogo, tendo algumas perdas para sair dos mínimos locais de comportamento que ele estava tendo e a partir da 26ª geração ele já alcança pontuações bem altas, tendo aprendido o jogo em aproximadamente 10 minutos, com 10 dinos por geração.
 
 ![Grafico](./graph.png "Grafico")
