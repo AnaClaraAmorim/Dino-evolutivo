@@ -2,7 +2,7 @@
 from math import sqrt, pow
 
 class ColisionMonitor:
-    def __init__(self, master, canvas, onCollid, elements = [], obstacles = [], dinosOnScreen = 0):
+    def __init__(self, master, canvas, onCollid, elements = [], obstacles = [], dinosOnScreen = 0, average_score = [], score = 0):
         self.master = master
         self.canvas = canvas
         # elements that can't crash with blocks
@@ -10,8 +10,11 @@ class ColisionMonitor:
         self.obstacles = obstacles
         self.onCollid = onCollid
         self.dinosOnScreen = dinosOnScreen
+        self.MaxDinos = dinosOnScreen
         self.start_id = None
         self.activated = False
+        self.average_score = average_score
+        self.score = score
         
     def run(self):
         self.activated = True
@@ -29,6 +32,7 @@ class ColisionMonitor:
                 for obstacle in self.obstacles:
                     
                     if(obstacle.onScreen and obstacle.canCollid and self.crash(element, obstacle)):
+                        self.average_score[-1] += self.score / self.MaxDinos
                         element.die()
                     
                     if(self.dinosOnScreen==1):

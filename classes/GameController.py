@@ -21,7 +21,7 @@ class GameController:
 
     def __init__(self, mode, dinos_per_gen = 10):
         self.best_score = []
-        self.average_score = []
+        self.average_score = [0]
         self.mode = mode#modo do jogo
         self.master = Tk()
         self.master.title("DINO GAME by Ana Clara")
@@ -205,7 +205,7 @@ class GameController:
         self.obstacleGenerator = ObstacleGenerator(self.master, self.canvas, self.updateGameParams, self.increaseScore)
         self.obstacleGenerator.updateObstaclesSpeed(self.game_params['speed'])
         self.obstacleGenerator.run()
-        self.colisionMonitor = ColisionMonitor(self.master, self.canvas, self.stopGround, self.dinos, self.obstacleGenerator.obstacles, self.dinosOnScreen)
+        self.colisionMonitor = ColisionMonitor(self.master, self.canvas, self.stopGround, self.dinos, self.obstacleGenerator.obstacles, self.dinosOnScreen, self.average_score, self.score)
         self.colisionMonitor.run()
     
 
@@ -249,7 +249,9 @@ class GameController:
                 if(self.mode == "train"):
                     dino.brain.save()
         if(self.mode == "simulation"):
-            np.save('data/general/best_scores.npy', np.array([self.best_score]))
+            np.save('data/general/best_scores.npy', np.array(self.best_score))
+            np.save('data/general/average_scores.npy', np.array(self.average_score))
+        self.average_score.append(0)
         self.obstacleGenerator.updateObstaclesSpeed(self.game_params['speed'])
         self.obstacleGenerator.reset()
         #final de uma geração
@@ -276,6 +278,7 @@ class GameController:
     # Atualiza score e aumenta velocidade 
     def increaseScore(self, score):
         self.score+=score
+        self.colisionMonitor.score = self.score
         if(self.score in self.scoresCheckPoint):
             self.game_params['speed']-=1
             self.obstacleGenerator.updateObstaclesSpeed(self.game_params['speed'])
